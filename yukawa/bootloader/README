@@ -1,0 +1,80 @@
+Build Mainline u-boot - bl33:
+=============================
+
+Main Wiki Page : https://gitlab.com/baylibre/amlogic/atv/u-boot/wikis/home
+
+Download the toolchain : gcc-linaro-7.2.1-2017.11-x86_64_aarch64-elf
+        http://releases.linaro.org/components/toolchain/binaries/7.2-2017.11/aarch64-elf/gcc-linaro-7.2.1-2017.11-x86_64_aarch64-elf.tar.xz
+
+Download U-Boot Source Code From :
+        https://gitlab.com/baylibre/amlogic/atv/u-boot.git
+
+actual tag :  u-boot/v2021.01/integ-20210202
+dev branch :  u-boot/v2021.01/integ
+
+link to U-Boot aosp release wiki page :
+https://gitlab.com/baylibre/amlogic/atv/u-boot/wikis/U-Boot-for-Yukawa-Release
+
+Compile:
+
+        export PATH=<path-to-toolchain>/gcc-linaro-7.2.1-2017.11-x86_64_aarch64-elf/bin:$PATH
+        export CROSS_COMPILE=aarch64-elf-
+        git clone https://gitlab.com/baylibre/amlogic/atv/u-boot.git
+        cd u-boot
+        git checkout u-boot/v2021.01/integ-20210202
+        make [sei510|sei610|sei610_ab|khadas-vim3_android|khadas-vim3_android_ab|khadas-vim3l_android|khadas-vim3l_android_ab]_defconfig
+        make
+
+Generate fip binary
+===================
+
+use tarball in fip_packages folder and untar it
+
+- For sei510 (yukawa_sei510):
+        tar -xaf fip-collect-g12a-g12a_u200_v1-amlogic-dev_9.2.1811_21-20191203-113239.tar.gz
+
+- For sei610 (yukawa):
+        tar -xaf fip-collect-g12a-sm1_ac214_v1-amlogic-dev_9.2.1811_21-20191204-161855.tar.gz
+
+- For VIM3L (yukawa):
+        tar -xaf fip-collect-g12a-kvim3l-khadas-vims-pie-20210111-211224.tar.gz
+
+- For VIM3 (yukawa):
+        tar -xaf fip-collect-g12b-kvim3-khadas-vims-pie-20210111-211833.tar.gz
+
+Then launch script for scripts folder:
+
+        ./generate-bins-new.sh <fip-collect-directory> <target-bl33-binary>
+
+flash result with:
+        fastboot flash bootloader uboot-bins/u-boot.bin
+        fastboot erase bootenv
+        fastboot reboot bootloader
+
+after reboot if partitions table need to be updated:
+        fastboot oem format
+
+More informations to update and flash bootloader on Yukawa:
+https://gitlab.com/baylibre/amlogic/atv/u-boot/wikis/U-Boot-for-Yukawa
+
+
+Generate new fip_packages for Khadas VIM3/3L
+=============================================
+
+- Launch collect script for script foler :
+        ./collect-khadas_binaries-git-refboard.sh <khadas-uboot-branch> <soc> <refboard>
+
+branch to use for VIM3/3L : khadas-vims-pie
+soc VIM3 : g12b
+    VIM3L: sm1
+
+refboard  VIM3 : kvim3
+          VIM3L: kvim3l
+
+- Generate tarball :
+        Example:
+                tar -czf fip-collect-g12b-kvim3-khadas-vims-pie-20210111-211833.tar.gz fip-collect-g12b-kvim3-khadas-vims-pie-20210111-211833
+
+        Adapt folder name with folder generate by collect script.
+
+- to generate fip bin cf "Generate fip binary"
