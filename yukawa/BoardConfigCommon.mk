@@ -22,6 +22,10 @@ TARGET_BOARD_PLATFORM := yukawa
 
 # Vulkan
 BOARD_INSTALL_VULKAN := true
+
+# OpenCL
+BOARD_INSTALL_OPENCL := true
+
 # BT configs
 BOARD_HAVE_BLUETOOTH := true
 
