@@ -138,24 +138,26 @@ PRODUCT_PACKAGES += \
     TvSampleLeanbackLauncher
 endif
 
-# TV Specific Packages
-PRODUCT_PACKAGES += \
-    LiveTv \
-    google-tv-pairing-protocol \
-    LeanbackSampleApp \
-    tv_input.default \
-    com.android.media.tv.remoteprovider \
-    InputDevices
+ifeq ($(TARGET_USE_TABLET_LAUNCHER), true)
+    # TV Specific Packages
+    PRODUCT_PACKAGES += \
+        LiveTv \
+        google-tv-pairing-protocol \
+        LeanbackSampleApp \
+        tv_input.default \
+        com.android.media.tv.remoteprovider \
+        InputDevices
 
-PRODUCT_PACKAGES += \
-    LeanbackIME
+    PRODUCT_PACKAGES += \
+        LeanbackIME
 
-ifeq (,$(filter $(TARGET_PRODUCT),yukawa_gms yukawa32_gms yukawa_sei510_gms))
-PRODUCT_PACKAGES += \
-    TvProvision \
-    TVLauncherNoGms \
-    TVRecommendationsNoGms
-endif
+    ifeq (,$(filter $(TARGET_PRODUCT),yukawa_gms yukawa32_gms yukawa_sei510_gms))
+    PRODUCT_PACKAGES += \
+        TvProvision \
+        TVLauncherNoGms \
+        TVRecommendationsNoGms
+    endif
+    endif
 endif
 
 PRODUCT_PACKAGES += \
@@ -333,7 +335,8 @@ PRODUCT_COPY_FILES += \
     frameworks/av/services/audiopolicy/config/usb_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/usb_audio_policy_configuration.xml \
     frameworks/av/services/audiopolicy/config/default_volume_tables.xml:$(TARGET_COPY_OUT_VENDOR)/etc/default_volume_tables.xml \
     frameworks/av/services/audiopolicy/config/audio_policy_volumes.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_volumes.xml \
-    frameworks/av/media/libeffects/data/audio_effects.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_effects.xml 
+    frameworks/av/media/libeffects/data/audio_effects.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_effects.xml \
+    $(LOCAL_PATH)/audio_effects.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_effects.xml \
 
 AUDIO_DEFAULT_OUTPUT ?= speaker
 ifeq ($(AUDIO_DEFAULT_OUTPUT),hdmi)

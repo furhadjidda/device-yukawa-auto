@@ -7,9 +7,7 @@
 /dev/i2c-0             u:object_r:led_device:s0
 /dev/nanohub           u:object_r:sensors_device:s0
 /dev/nanohub_comms     u:object_r:sensors_device:s0
-
-/sys/devices/virtual/thermal(/.*)?      u:object_r:sysfs_thermal:s0
-/sys/class/thermal(/.*)?                u:object_r:sysfs_thermal:s0
+/dev/dma_heap/linux,cma u:object_r:dmabuf_cma_heap_device:s0
 
 /sys/devices/platform/soc/ffe03000.sd/mmc_host(/.*)?             u:object_r:sysfs_suspend_stats:s0
 /sys/devices/platform/soc/ff800000.bus/ff8000a8.rtc/wakeup(/.*)? u:object_r:sysfs_suspend_stats:s0
