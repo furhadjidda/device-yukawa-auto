@@ -2,13 +2,12 @@ ifndef TARGET_KERNEL_USE
 TARGET_KERNEL_USE=4.19
 endif
 
-include device/amlogic/yukawa/device_auto-common.mk
+$(call inherit-product, device/amlogic/yukawa/device_auto-common.mk)
 include packages/services/Car/computepipe/products/computepipe.mk
-
 
 ifeq ($(TARGET_VIM3), true)
 PRODUCT_PROPERTY_OVERRIDES += ro.product.device=vim3
-AUDIO_DEFAULT_OUTPUT := speaker
+AUDIO_DEFAULT_OUTPUT := hdmi
 GPU_TYPE := gondul_ion
 else ifeq ($(TARGET_VIM3L), true)
 PRODUCT_PROPERTY_OVERRIDES += ro.product.device=vim3l
@@ -55,18 +54,6 @@ PRODUCT_PROPERTY_OVERRIDES += aaudio.mmap_exclusive_policy=2
 # The DSP will still be bursting at 48 frames but AAudio will think the burst is 96 frames.
 # A low number, like 48, might increase power consumption or stress the system.
 PRODUCT_PROPERTY_OVERRIDES += aaudio.hw_burst_min_usec=2000
-
-PRODUCT_DEFAULT_PROPERTY_OVERRIDES += vendor.display.enable_kernel_idle_timer=true
-PRODUCT_DEFAULT_PROPERTY_OVERRIDES += ro.surface_flinger.use_color_management=true
-PRODUCT_DEFAULT_PROPERTY_OVERRIDES += ro.surface_flinger.has_wide_color_display=true
-PRODUCT_DEFAULT_PROPERTY_OVERRIDES += ro.surface_flinger.has_HDR_display=true
-PRODUCT_DEFAULT_PROPERTY_OVERRIDES += ro.surface_flinger.set_idle_timer_ms=80
-PRODUCT_DEFAULT_PROPERTY_OVERRIDES += ro.surface_flinger.set_touch_timer_ms=200
-PRODUCT_DEFAULT_PROPERTY_OVERRIDES += ro.surface_flinger.set_display_power_timer_ms=1000
-PRODUCT_DEFAULT_PROPERTY_OVERRIDES += ro.surface_flinger.support_kernel_idle_timer=true
-PRODUCT_DEFAULT_PROPERTY_OVERRIDES += ro.surface_flinger.use_content_detection_for_refresh_rate=true
-PRODUCT_DEFAULT_PROPERTY_OVERRIDES += ro.surface_flinger.protected_contents=true
-
 
 # MIDI feature
 PRODUCT_COPY_FILES += \
