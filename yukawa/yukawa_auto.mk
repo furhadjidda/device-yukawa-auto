@@ -6,12 +6,6 @@ $(call inherit-product, device/amlogic/yukawa/device_auto-yukawa.mk)
 $(call inherit-product, device/amlogic/yukawa/yukawa-common.mk)
 
 #
-# All components inherited here go to system_ext image
-#
-$(call inherit-product, $(SRC_TARGET_DIR)/product/handheld_system_ext.mk)
-$(call inherit-product, $(SRC_TARGET_DIR)/product/telephony_system_ext.mk)
-
-#
 # All components inherited here go to product image
 #
 $(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_product.mk)
@@ -126,12 +120,6 @@ PRODUCT_COPY_FILES += \
             packages/services/Car/car_product/init/init.bootstat.rc:root/init.bootstat.rc \
             packages/services/Car/car_product/init/init.car.rc:root/init.car.rc
 
-# Pre-create users
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
-    android.car.number_pre_created_users=1 \
-    android.car.number_pre_created_guests=1 \
-    android.car.user_hal_enabled=true
-
 # Enable landscape
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.screen.landscape.xml:system/etc/permissions/android.hardware.screen.landscape.xml \
@@ -173,11 +161,35 @@ PRODUCT_PACKAGES += android.automotive.evs.manager@1.1 \
 PRODUCT_PRODUCT_PROPERTIES += persist.automotive.evs.mode=0
 
 # Automotive display service
-PRODUCT_PACKAGES += android.frameworks.automotive.display@1.0-service
+PRODUCT_PACKAGES += android.frameworks.automotive.display@1.0-service \
+  Vim3CarCalendarApp \
+  Vim3LocalMediaPlayer \
+  Vim3CarSettings \
+  Vim3CarRadioApp
 
-#
-# All components inherited here go to vendor image
-#
-# TODO(b/136525499): move *_vendor.mk into the vendor makefile later
-$(call inherit-product, $(SRC_TARGET_DIR)/product/handheld_vendor.mk)
-$(call inherit-product, $(SRC_TARGET_DIR)/product/telephony_vendor.mk)
+LOCAL_CFLAGS += \
+    -Wno-unused-variable \
+    -Wno-unused-parameter \
+
+# External Libraries
+PRODUCT_PACKAGES += libpaho-mqtt3a \
+  MQTTAsync_subscribe \
+  MQTTAsync_publish \
+  libpaho-mqttpp3 \
+  async_publish \
+  async_publish_time \
+  async_subscribe \
+  async_consume \
+  sync_publish \
+  sync_consume \
+  pahocpp_unit_tests \
+  libev \
+  si4703_test_app \
+  gpiodetect \
+  gpiofind \
+  gpioget \
+  gpioinfo \
+  gpiomon \
+  gpioset
+
+

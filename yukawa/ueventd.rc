@@ -9,6 +9,8 @@ subsystem usbmisc
 /dev/graphics/fb0	0666 system graphics
 /dev/cec0	0666 system graphics
 /dev/i2c-0	0666 system system
+/dev/gpiochip0	0666 system audio
+/sys/class/gpio/ 0666 system system
 /dev/nanohub              0660   system     system
 /dev/nanohub_comms        0660   system     system
 
