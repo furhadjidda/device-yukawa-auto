@@ -19,7 +19,7 @@
 
 # files in /vendor
 /(vendor|system/vendor)/lib(64)?/hw/gralloc\.yukawa\.so u:object_r:same_process_hal_file:s0
-/vendor/bin/hw/android\.hardware\.health@2\.0-service\.yukawa u:object_r:hal_health_default_exec:s0
+/vendor/lib(64)?/hw/android\.hardware\.health@2\.0-impl-2\.1-cuttlefish\.so u:object_r:same_process_hal_file:s0
 /vendor/bin/hw/lights-yukawa u:object_r:hal_light_default_exec:s0
 
 #Block devices

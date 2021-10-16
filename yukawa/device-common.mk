@@ -66,11 +66,11 @@ PRODUCT_PACKAGES += \
 
 # Boot control
 PRODUCT_PACKAGES += \
-    android.hardware.boot@1.0-impl \
-    android.hardware.boot@1.0-impl.recovery \
-    android.hardware.boot@1.0-service \
-	bootctrl.yukawa.recovery \
-	bootctrl.yukawa
+    android.hardware.boot@1.2-impl \
+    android.hardware.boot@1.2-impl.recovery \
+    android.hardware.boot@1.2-service \
+    bootctrl.yukawa.recovery \
+    bootctrl.yukawa
 endif
 
 # Dynamic partitions
@@ -87,8 +87,8 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += vndk_package
 
 PRODUCT_PACKAGES += \
-    android.hardware.health@2.0-service.yukawa \
-    android.hardware.health@2.0-service
+    android.hardware.health@2.1-impl-cuttlefish \
+    android.hardware.health@2.1-service
 
 ifeq ($(TARGET_USE_AB_SLOT), true)
 ifeq ($(TARGET_AVB_ENABLE), true)
@@ -209,16 +209,16 @@ PRODUCT_PACKAGES += \
     android.hardware.audio.service \
     android.hardware.audio@7.0-impl \
     android.hardware.audio.effect@7.0-impl \
-    android.hardware.soundtrigger@2.2-impl \
+    android.hardware.soundtrigger@2.3-impl \
 
 # Hardware Composer HAL
 #
 PRODUCT_PACKAGES += \
     hwcomposer.drm_meson \
-    android.hardware.drm@1.0-impl \
-    android.hardware.drm@1.0-service \
-    android.hardware.drm@1.3-service.widevine \
-    android.hardware.drm@1.3-service.clearkey
+    android.hardware.drm@1.3-impl \
+    android.hardware.drm@1.3-service \
+    android.hardware.drm@1.4-service.widevine \
+    android.hardware.drm@1.4-service.clearkey
 
 # CEC
 PRODUCT_PACKAGES += \
@@ -233,11 +233,6 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/input/Generic.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/Generic.kl \
     frameworks/native/data/etc/android.hardware.hdmi.cec.xml:system/etc/permissions/android.hardware.hdmi.cec.xml
 
-# Memtrack
-PRODUCT_PACKAGES += memtrack.default \
-    android.hardware.memtrack@1.0-service \
-    android.hardware.memtrack@1.0-impl
-
 PRODUCT_PACKAGES += \
     gralloc.yukawa \
     android.hardware.graphics.composer@2.2-impl \
@@ -248,9 +243,11 @@ PRODUCT_PACKAGES += \
 
 # PowerHAL
 PRODUCT_PACKAGES += \
-    power.default \
-    android.hardware.power@1.0-impl \
-    android.hardware.power@1.0-service
+    android.hardware.power-service.example
+
+# PowerStats HAL
+PRODUCT_PACKAGES += \
+    android.hardware.power.stats-service.example
 
 # Sensor HAL
 ifneq ($(TARGET_SENSOR_MEZZANINE),)
