@@ -1,0 +1,3 @@
+allow carservice_app user_profile_root_file:dir search;
+allow experimentalcarservice_app user_profile_root_file:dir search;
+
