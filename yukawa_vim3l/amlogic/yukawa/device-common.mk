@@ -22,6 +22,11 @@ ifeq ($(TARGET_USE_TABLET_LAUNCHER), true)
 # Setup tablet build
 $(call inherit-product, frameworks/native/build/tablet-10in-xhdpi-2048-dalvik-heap.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base.mk)
+else ifeq ($(TARGET_USE_AUTO_LAUNCHER), true)
+# Setup Auto Build
+$(call inherit-product, frameworks/native/build/tablet-7in-hdpi-1024-dalvik-heap.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/full_base.mk)
+$(call inherit-product, packages/services/Car/car_product/build/car.mk)
 else
 # Setup TV Build
 USE_OEM_TV_APP := true
@@ -134,31 +139,33 @@ PRODUCT_PACKAGES += \
     TvSampleLeanbackLauncher
 endif
 
-# TV Specific Packages
-PRODUCT_PACKAGES += \
-    LiveTv \
-    google-tv-pairing-protocol \
-    LeanbackSampleApp \
-    tv_input.default \
-    com.android.media.tv.remoteprovider \
-    InputDevices
+ifeq ($(TARGET_USE_TABLET_LAUNCHER), true)
+    # TV Specific Packages
+    PRODUCT_PACKAGES += \
+        LiveTv \
+        google-tv-pairing-protocol \
+        LeanbackSampleApp \
+        tv_input.default \
+        com.android.media.tv.remoteprovider \
+        InputDevices
 
-PRODUCT_PACKAGES += \
-    LeanbackIME
+    PRODUCT_PACKAGES += \
+        LeanbackIME
 
-ifeq (,$(filter $(TARGET_PRODUCT),yukawa_gms yukawa32_gms yukawa_sei510_gms))
-PRODUCT_PACKAGES += \
-    TvProvision \
-    TVLauncherNoGms \
-    TVRecommendationsNoGms
-endif
+    ifeq (,$(filter $(TARGET_PRODUCT),yukawa_gms yukawa32_gms yukawa_sei510_gms))
+    PRODUCT_PACKAGES += \
+        TvProvision \
+        TVLauncherNoGms \
+        TVRecommendationsNoGms
+    endif
+    endif
 endif
 
 PRODUCT_PACKAGES += \
     libhidltransport \
     libhwbinder 
 
-PRODUCT_PROPERTY_OVERRIDES += ro.sf.lcd_density=320
+PRODUCT_PROPERTY_OVERRIDES += ro.sf.lcd_density=230
 
 PRODUCT_PACKAGES +=  libGLES_mali
 PRODUCT_PACKAGES +=  libGLES_android

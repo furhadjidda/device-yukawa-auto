@@ -1,0 +1,11 @@
+allow platform_app broadcastradio_service:service_manager find;
+
+
+allow hal_broadcastradio_default led_device:{ file lnk_file } { create rw_file_perms };
+allow hal_broadcastradio_default led_device:chr_file rw_file_perms;
+allow hal_broadcastradio_default led_device:dir create_dir_perms;
+
+
+allow hal_broadcastradio_default gpio_dev:{ file lnk_file } { create rw_file_perms };
+allow hal_broadcastradio_default gpio_dev:chr_file rw_file_perms;
+allow hal_broadcastradio_default gpio_dev:dir create_dir_perms;
